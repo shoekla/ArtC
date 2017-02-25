@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     public void login(View view) {
         final EditText user = (EditText) findViewById(R.id.editText);
         final EditText pas = (EditText) findViewById(R.id.editText2);
-        final EditText pho = (EditText) findViewById(R.id.editText3);
+        //final EditText pho = (EditText) findViewById(R.id.editText3);
         final String userName = user.getText().toString();
         final String password = pas.getText().toString();
-        final String phone = pho.getText().toString();
+        //final String phone = pho.getText().toString();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference();
         myRef.addValueEventListener(new ValueEventListener() {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (checkFire) {
                     String users = (String) dataSnapshot.child("Users").getValue().toString();
-                    String phones = (String) dataSnapshot.child("phones").getValue().toString();
+                    //String phones = (String) dataSnapshot.child("phones").getValue().toString();
                     String passW = (String) dataSnapshot.child("PassW").getValue().toString();
                     //String test = (String) dataSnapshot.child("Movies").getValue().toString();
                     System.out.println("Info: users: " + users);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     DataForUser.setUser(userName);
-                    String url = "http://abirshukla.pythonanywhere.com/movio/addUser/" + userName;
+                    String url = "http://abirshukla.pythonanywhere.com/artC/addUser/" + userName;
                     getHTML(url);
                     if (!okay) {
                         Toast.makeText(getApplicationContext(), "Error Occured Please try again later",
@@ -79,11 +79,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     users = users + "," + userName;
                     passW = passW + "," + password;
-                    phones = phones+","+phone;
+                    //phones = phones+","+phone;
                     checkFire = false;
                     myRef.child("PassW").setValue(passW);
                     myRef.child("Users").setValue(users);
-                    myRef.child("phones").setValue(phones);
+                    //myRef.child("phones").setValue(phones);
 
                     Toast.makeText(getApplicationContext(), "Your In!",
                             Toast.LENGTH_SHORT).show();
