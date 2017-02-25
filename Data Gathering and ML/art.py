@@ -19,8 +19,8 @@ def is_in_arr(lis,s):
 def deleteDuplicates(lis):
 	newLis=[]
 	for item in lis:
-		if item not in newLis:
-			newLis.append(item)
+		if item.strip() not in newLis:
+			newLis.append(item.strip())
 	return newLis
 
 def getData(url):
@@ -230,24 +230,17 @@ def getPaintingUrl(soup):
 		s="http://en.most-famous-paintings.com"
 		a = str(link)
 		beg = a.find('src="')
-		return s+a[beg:a.find('"',beg+5)]
-def getPaintingArtist(url):
-	source_code=requests.get(url)
-	plain_text=source_code.text
-	soup=BeautifulSoup(plain_text)
-	title = getPaintingTitle(soup)
+		return s+a[beg:a.find('"',beg+6)].replace('src="',"")
+
+def getPaintingArtist(soup):
 	for link in soup.findAll('h2'):
 		a = str(link)
 		a = a[a.find(">")+1:a.find("</h1>")].strip().replace('"',"")
-		return a[:a.find("-")]
-def getPaintingInfo(url):
-	source_code=requests.get(url)
-	plain_text=source_code.text
-	soup=BeautifulSoup(plain_text)
-	title = getPaintingTitle(soup)
-	if title == None:
-		return None
-	#print title
+		return a[:a.find("-")].strip()
+
+
+def getPaintingInfo(soup):
+
 	artist = getPaintingArtist(soup)
 	if artist == None:
 		return None
@@ -256,43 +249,58 @@ def getPaintingInfo(url):
 	if year == None:
 		return None
 	#print title+" "+artist+" "+str(year)
-	return [title,artist,year]
+	artists = ['Leonardo Da Vinci', 'Vincent Van Gogh', 'Edvard Munch', 'Pablo Picasso', 'Jan Vermeer', 'Rembrandt Van Rijn', 'Gustav Klimt', 'Claude Monet', 'Georges Pierre Seurat', 'Grant Wood', 'James Abbott Mcneill Whistler', 'Rene Magritte', 'Pierre', 'Edouard Manet', 'Caspar David Friedrich', 'Francisco De Goya', 'Michelangelo Buonarroti', 'Raphael (Raffaello Sanzio Da Urbino)', 'Henri Matisse', 'Joan Miro', 'Andrea Mantegna', 'Max Beckmann', 'Caravaggio (Michelangelo Merisi)', 'Diego Velazquez', 'Rose Maynard Barton', 'Jackson Pollock', 'Paul Gauguin', 'Arshile Gorky', 'Paul Cezanne', 'Giuseppe Arcimboldo', 'Albrecht Durer', 'Emile Nolde', 'Suzanne Valadon', 'Gustave Caillebotte', 'Salvador Dali', 'Wassily Kandinsky', 'Jean Joseph Benjamin Constant', 'August Macke', 'Georges Braque', 'Pieter Bruegel The Younger', 'Jean Antoine Watteau', 'Henri Rousseau', 'Jean Frederic Bazille', 'Lucian Freud', 'Pavel Filonov', 'Robert Delaunay', 'Sandro Botticelli', 'Matthias Gr\\xc3\\xbcnewald', 'Marc Chagall', 'Ernst Ludwig Kirchner', 'Georgios Jakobides', 'Marcel Duchamp', 'Frida Kahlo', 'Paul Delvaux', 'Egon Schiele', 'Oskar Kokoschka', 'Bernardo Bellotto', 'Amedeo Modigliani', 'Albert Bierstadt', 'Umberto Boccioni', 'Albert Charles Lebourg', 'Edward Hopper', 'Edgar Degas', 'Giovanni Antonio Canal (Canaletto)', 'Denis Maurice', 'Giorgio De Chirico', 'Otto Dix', 'Camille Pissarro', 'William Holman Hunt', 'William Merritt Chase', 'Mary Stevenson Cassatt', 'Frederick Childe Hassam', 'Fernand Leger', 'Agnolo Bronzino', 'Paul Signac', 'Franz Marc', 'William Turner', 'Jean', 'Juan Gris', 'Max Ernst', 'Max Liebermann', 'John Singer Sargent', 'Alfred Sisley', 'Domenico Campagnola', 'Yves Tanguy', 'Balthus (Balthasar Klossowski)', 'Francis Picabia', 'El Greco (Dom\\xc3\\xa9nikos Theotokopoulos)', 'John Everett Millais', "Georgia O'keeffe", 'Arnold Bocklin', 'Paolo Veronese', 'Bernardo Strozzi', 'John Singleton Copley', 'Gustave Courbet', 'Gerard David', 'John William Waterhouse', 'Winslow Homer', 'Eug\\xc3\\xa8ne Delacroix', 'George Stubbs', 'Andy Warhol', 'Tiziano Vecellio (Titian)', 'Francis Bacon', 'Jan Matejko', 'Benjamin West', 'William Adolphe Bouguereau', 'Pieter Bruegel The Elder', 'Alexandre Cabanel', 'Berthe Morisot', 'Ivan Ivanovich Shishkin', 'Lawrence Alma', 'Jean L\\xc3\\xa9on G\\xc3\\xa9r\\xc3\\xb4me', 'Thomas Cole', 'Edwin Lord Weeks', 'Nicolas Poussin', 'Peter Paul Rubens', 'Annibale Carracci', 'John Atkinson Grimshaw', 'John Constable', 'Mark Rothko (Marcus Rothkowitz)', 'Barnett Newman', 'Hans Memling', 'Frans Snyders', 'Pieter De Hooch', 'John Henry Twachtman', 'Albert Edelfelt', 'Albrecht Altdorfer', 'Aurelio Arteta', 'George Grosz', 'Jacopo Carucci (Pontormo)', 'Frederic Edwin Church', 'Tom Wesselmann', 'Thomas Hart Benton', 'Lovis Corinth (Franz Heinrich Louis)', 'Phillip Leslie Hale', 'Jean Theodoor Toorop', 'Franz Xaver Winterhalter', 'Theodore Clement Steele', 'Willard Leroy Metcalf', 'Charles Fran\\xc3\\xa7ois Daubigny', 'Ivan Aivazovsky', 'Giovanni Battista Tiepolo', 'Giovanni Bellini', 'Tamara De Lempicka', 'Giorgione (Giorgio Barbarelli Da Castelfranco)', 'Paul Delaroche (Hippolyte Delaroche)', 'Jacob Jordaens', 'Jasper Johns', 'Hieronymus Bosch', 'Sebastiano Ricci', 'David Hockney', 'Robert Rauschenberg', 'Peter Max', 'Paolo Uccello', 'Ilya Yefimovich Repin', 'Giotto Di Bondone', 'Roy Lichtenstein', 'Jan Van Eyck', 'Rogier Van Der Weyden', 'Anthony Van Dyck', 'Fernand Edmond Jean Marie Khnopff', 'Geertgen Tot Sint Jans', 'Katsushika Hoki', 'Hans Holbein The Younger', 'Thomas Eakins', 'Piero Della Francesca', 'Luca Signorelli', 'Parmigianino', 'Gentile Bellini', 'Lucas Cranach The Elder', 'Tintoretto (Jacopo Comin)', 'Richard Lindner', 'Rosso Fiorentino', 'Jan Brueghel The Elder', 'Georges De La Tour', 'Richard Hamilton']
+	data = [year]
+	for i in artists:
+		if i == artist:
+			data.append(1)
+		else:
+			data.append(0)
+	return data
 
 pages = []
-artists = []
+
+titles = []
+urls = []
+alldata = []
 count = 0
 crawl("http://en.most-famous-paintings.com/MostFamousPaintings.nsf/ListOfTop1000MostPopularPainting?OpenForm",pages)
 for i in pages:
 	if "Open&A" in i:
-		a = getPaintingArtist(i)
-		a = a.replace("</h","")
-		if a != None and a not in artists:
-			print a
-			artists.append(a)
-			count = count + 1
-			if count > 200:
+		try:
+			source_code=requests.get(i)
+			plain_text=source_code.text
+			soup=BeautifulSoup(plain_text)
+			title = getPaintingTitle(soup)
+			if title == None:
+				continue
+			url = getPaintingUrl(soup)
+			if url == None:
+				continue
+			data = getPaintingInfo(soup)
+			if data == None:
+				continue
+			urls.append(url)
+			titles.append(title)
+			alldata.append(data)
+			print title+" added!"
+			count = count+1
+			if count > 170:
 				break
-print artists
+
+		except:
+			print "error ar "+i
+print titles
+print "\n\n\n"
+print urls
+print "\n\n\n\n\n"
+print alldata
+
+#print artists
+
 #getPaintingInfo("http://en.most-famous-paintings.com/MostFamousPaintings.nsf/A?Open&A=8XYFFG")
 #print getPaintingArtist("http://en.most-famous-paintings.com/MostFamousPaintings.nsf/A?Open&A=8XYFFG")
-def crawlImg(url,pages):
-	try:
-		arr=[]
-		source_code=requests.get(url)
-		plain_text=source_code.text
-		soup=BeautifulSoup(plain_text)
-		for link in soup.findAll('img'):
 
-			href=link.get('src')
-			href_test=str(href)
-			#if href_test[0]!='/' and href_test[0]!='j' and href_test!='none' and href_test[0]!='#':
-			if is_in_arr(pages,str(href))==False:
-				if "1.1" in href:
-					pages.append(href)
-
-
-	except:
-		print "Error at: "+str(url)
 import pyrebase
 
 config = {
@@ -303,20 +311,25 @@ config = {
 
 }
 
-db.child("artists").push(str(artists))
-print "Done!"
+#arr = ['Leonardo Da Vinci ', 'Vincent Van Gogh ', 'Edvard Munch ', 'Pablo Picasso ', 'Jan Vermeer ', 'Rembrandt Van Rijn ', 'Gustav Klimt ', 'Claude Monet ', 'Georges Pierre Seurat ', 'Grant Wood ', 'James Abbott Mcneill Whistler ', 'Rene Magritte ', 'Pierre', 'Edouard Manet ', 'Caspar David Friedrich ', 'Francisco De Goya ', 'Michelangelo Buonarroti ', 'Raphael (Raffaello Sanzio Da Urbino) ', 'Henri Matisse ', 'Joan Miro ', 'Andrea Mantegna ', 'Max Beckmann ', 'Caravaggio (Michelangelo Merisi) ', 'Diego Velazquez ', 'Rose Maynard Barton ', 'Jackson Pollock ', 'Paul Gauguin ', 'Arshile Gorky ', 'Paul Cezanne ', 'Giuseppe Arcimboldo ', 'Albrecht Durer ', 'Emile Nolde ', 'Suzanne Valadon ', 'Gustave Caillebotte ', 'Salvador Dali ', 'Wassily Kandinsky ', 'Jean Joseph Benjamin Constant ', 'August Macke ', 'Georges Braque ', 'Pieter Bruegel The Younger ', 'Jean Antoine Watteau ', 'Henri Rousseau ', 'Jean Frederic Bazille ', 'Lucian Freud ', 'Pavel Filonov ', 'Robert Delaunay ', 'Sandro Botticelli ', 'Matthias Gr\xc3\xbcnewald ', 'Marc Chagall ', 'Ernst Ludwig Kirchner ', 'Georgios Jakobides ', 'Marcel Duchamp ', 'Frida Kahlo ', 'Paul Delvaux ', 'Egon Schiele ', 'Oskar Kokoschka ', 'Bernardo Bellotto ', 'Amedeo Modigliani ', 'Salvador Dali', 'Albert Bierstadt ', 'Umberto Boccioni ', 'Albert Charles Lebourg ', 'Edward Hopper ', 'Edgar Degas ', 'Giovanni Antonio Canal (Canaletto) ', 'Denis Maurice ', 'Giorgio De Chirico ', 'Otto Dix ', 'Camille Pissarro ', 'William Holman Hunt ', 'William Merritt Chase ', 'Mary Stevenson Cassatt ', 'Frederick Childe Hassam ', 'Fernand Leger ', 'Agnolo Bronzino ', 'Paul Signac ', 'Franz Marc ', 'Pablo Picasso', 'William Turner ', 'Jean', 'Juan Gris ', 'Claude Monet', 'Max Ernst ', 'Edouard Manet', 'Max Liebermann', 'Ernst Ludwig Kirchner', 'John Singer Sargent ', 'Alfred Sisley ', 'Domenico Campagnola ', 'Yves Tanguy ', 'Balthus (Balthasar Klossowski) ', 'Francis Picabia ', 'El Greco (Dom\xc3\xa9nikos Theotokopoulos) ', 'John Everett Millais ', "Georgia O'keeffe ", 'Giorgio De Chirico', 'Arnold Bocklin ', 'Paolo Veronese ', 'Bernardo Strozzi ', 'Edgar Degas', 'John Singleton Copley ', 'Gustave Courbet ', 'Gerard David ', 'John William Waterhouse ', 'Winslow Homer ', 'Eug\xc3\xa8ne Delacroix ', 'George Stubbs ', 'Andy Warhol', 'Tiziano Vecellio (Titian) ', 'Francis Bacon ', 'Jan Matejko ', 'Benjamin West ', 'William Adolphe Bouguereau ', 'Pieter Bruegel The Elder ', 'Alexandre Cabanel ', 'Berthe Morisot ', 'Ivan Ivanovich Shishkin ', 'Albert Charles Lebourg', 'Lawrence Alma', 'Jean L\xc3\xa9on G\xc3\xa9r\xc3\xb4me ', 'Thomas Cole ', 'Edwin Lord Weeks ', 'Nicolas Poussin ', 'Peter Paul Rubens ', 'Annibale Carracci ', 'John Atkinson Grimshaw', 'John Constable ', 'Mark Rothko (Marcus Rothkowitz) ', 'Barnett Newman ', 'Hans Memling ', 'Frans Snyders', 'Pieter De Hooch ', 'John Henry Twachtman ', 'Albert Edelfelt ', 'Albrecht Altdorfer ', 'Aurelio Arteta', 'George Grosz ', 'Jacopo Carucci (Pontormo)', 'Frederic Edwin Church ', 'Tom Wesselmann', 'Thomas Hart Benton', 'Lovis Corinth (Franz Heinrich Louis) ', 'Phillip Leslie Hale ', 'Jean Theodoor Toorop ', 'Franz Xaver Winterhalter ', 'Theodore Clement Steele', 'Willard Leroy Metcalf ', 'Charles Fran\xc3\xa7ois Daubigny ', 'John Atkinson Grimshaw ', 'Ivan Aivazovsky ', 'Giovanni Battista Tiepolo ', 'Theodore Clement Steele ', 'Giovanni Bellini ', 'Tamara De Lempicka ', 'Giorgione (Giorgio Barbarelli Da Castelfranco) ', 'Paul Delaroche (Hippolyte Delaroche) ', 'Jacob Jordaens ', 'Francis Bacon', 'Jasper Johns ', 'Jasper Johns', 'Mark Rothko (Marcus Rothkowitz)', 'Hieronymus Bosch ', 'Sebastiano Ricci ', 'Gustav Klimt', 'David Hockney', 'Grant Wood', 'Robert Rauschenberg', 'Peter Max', 'Paolo Uccello', 'Sandro Botticelli', 'Ilya Yefimovich Repin ', 'Giotto Di Bondone ', 'Roy Lichtenstein ', 'Jan Van Eyck ', 'Jan Van Eyck', 'Rene Magritte', 'Rogier Van Der Weyden ', 'Anthony Van Dyck ', 'Rembrandt Van Rijn', 'Fernand Edmond Jean Marie Khnopff', 'Peter Paul Rubens', 'Geertgen Tot Sint Jans ', 'Katsushika Hoki ', 'Paolo Uccello ', 'Hans Holbein The Younger ', 'Thomas Eakins ', 'Piero Della Francesca ', 'Piero Della Francesca', 'Paul Cezanne', 'Luca Signorelli ', 'Hans Memling', 'Parmigianino ', 'Gentile Bellini ', 'Lucas Cranach The Elder ', 'Tintoretto (Jacopo Comin) ', 'Richard Lindner', 'Rosso Fiorentino', 'Jan Brueghel The Elder ', 'Georges De La Tour ', 'David Hockney ', 'Richard Hamilton']
+#newArr = deleteDuplicates(arr)
 
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+#db.child("artists").push(str(newArr))
+#print "Done!"
+db.child("titless").push(str(titles))
+db.child("urlss").push(str(urls))
+db.child("dataImgs").push(str(alldata))
+def getData(name):
+	movie = db.child(name).get()
+	s = str(movie.val())
+	if s.startswith("OrderedDict") == False:
+		return s
+	return s
 
-
-
-
-
-
-
-
-
-
-
+#arr = eval(getData("artistsNames"))
+#print len(arr)
 
 
 
