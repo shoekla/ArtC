@@ -17,14 +17,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="0.2">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/artName" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/artIst" />
+                android:id="@+id/artName"
+                android:layout_weight="0.5"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/artIst"
+                android:layout_weight="0.5"/>
         </LinearLayout>
     </LinearLayout>
 
