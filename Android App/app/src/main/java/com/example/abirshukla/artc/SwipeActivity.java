@@ -15,9 +15,9 @@ public class SwipeActivity extends AppCompatActivity {
     ImageView artImage;
     TextView artName;
     TextView artIst;
-    Button like;
-    Button info;
-    Button dislike;
+    Button likeButton;
+    Button infoButton;
+    Button dislikeButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +28,35 @@ public class SwipeActivity extends AppCompatActivity {
         artImage = (ImageView) findViewById(R.id.artView);
         artName = (TextView) findViewById(R.id.artName);
         artIst = (TextView) findViewById(R.id.artIst);
-        like = (Button) findViewById(R.id.Like);
-        info = (Button) findViewById(R.id.Info);
-        dislike = (Button) findViewById(R.id.Dislike);
+        likeButton = (Button) findViewById(R.id.Like);
+        infoButton = (Button) findViewById(R.id.Info);
+        dislikeButton = (Button) findViewById(R.id.Dislike);
 
+        likeButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        infoButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        dislikeButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
     }
 }
