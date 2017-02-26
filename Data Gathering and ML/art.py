@@ -110,7 +110,26 @@ def checkNum(num):
 			return False
 	else:
 		return False
-
+def getPhoneNumberForMueseum(loc):
+	loc = loc.replace(" ","%20")
+	url = "http://www.bing.com/search?q=art%20museum%20in%20"+loc+"&qs=n&form=QBRE&sp=-1&pq=art%20museum%20in%20"+loc+"&sc=0-24&sk=&cvid=35B371D5F8904D80B7D7E80EDCB66D7C"
+	source_code=requests.get(url)
+	plain_text=source_code.text
+	soup=BeautifulSoup(plain_text)
+	for link in soup.findAll('div',attrs={"class":"b_factrow"}):
+		a = str(link)
+		if '<div class="b_factrow">' in a:
+			if '<span' not in a:
+				sentence = a[a.find(">")+1:a.find("\xc2\xb7")]
+				beg = a.find("(")
+				num = a[beg:a.find("</div>")]
+				res = ""
+				for i in num:
+					if i.isdigit():
+						res = res+i
+				return res,sentence
+	return url
+print getPhoneNumberForMueseum("Katy Texas")
 def getPhone(url):
 	try:
 		tokens=getHTML(url)
@@ -257,7 +276,7 @@ def getPaintingInfo(soup):
 		else:
 			data.append(0)
 	return data
-
+"""
 pages = []
 
 titles = []
@@ -333,7 +352,7 @@ def getData(name):
 
 
 
-
+"""
 
 
 
