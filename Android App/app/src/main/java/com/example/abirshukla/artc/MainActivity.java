@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         //System.out.println("Info: "+arr[i]);
                         if (arr[i].equals(userName)) {
                             if (passArr[i].equals(password)) {
-                                Intent h = new Intent(MainActivity.this, Home.class);
+                                Intent h = new Intent(MainActivity.this, Choose.class);
                                 DataForUser.setUser(userName);
 
                                 h.putExtra("say","");
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), "Your In!",
                             Toast.LENGTH_SHORT).show();
-                    Intent h = new Intent(MainActivity.this, Home.class);
+                    Intent h = new Intent(MainActivity.this, Choose.class);
                     h.putExtra("say","");
                     startActivity(h);
                     return;

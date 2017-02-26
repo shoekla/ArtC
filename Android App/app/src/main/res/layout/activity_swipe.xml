@@ -5,23 +5,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_weight="0.8">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/artView"/>
+            android:id="@+id/artView"
+            android:layout_weight="0.8"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/artName"/>
+            android:orientation="vertical"
+            android:layout_weight="0.2">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/artIst" />
+                android:id="@+id/artName"
+                android:layout_weight="0.5"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/artIst"
+                android:layout_weight="0.5"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -29,7 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_weight="0.2">
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
